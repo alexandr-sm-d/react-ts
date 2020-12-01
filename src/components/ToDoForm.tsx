@@ -1,11 +1,16 @@
 import React, {useRef} from "react"
 
-export const ToDoForm: React.FunctionComponent = () => {
+interface ToDoFormProps {
+    onAdd(title: string): void
+}
+
+export const ToDoForm: React.FunctionComponent<ToDoFormProps> = ({onAdd}) => {
     const ref = useRef<HTMLInputElement>(null)
 
     const keyPressHandler = (event: React.KeyboardEvent): void => {
         if (event.key === 'Enter') {
-            console.log(ref.current!.value)
+            onAdd(ref.current!.value)
+            ref.current!.value = ''
         }
     }
 
