@@ -7,6 +7,12 @@ export const ToDoForm: React.FunctionComponent = () => {
         setTitle(event.target.value)
     }
 
+    const keyPressHandler = (event: React.KeyboardEvent) : void => {
+        if (event.key === 'Enter') {
+            console.log(title)
+        }
+    }
+
     useEffect(() => {
         console.log(title)
     })
@@ -16,6 +22,7 @@ export const ToDoForm: React.FunctionComponent = () => {
             <label htmlFor="todo">Enter todo</label>
             <input
                 onChange={inputChangeHandler}
+                onKeyPress={keyPressHandler}
                 value={title}
                 type="text"
                 placeholder='enter todo'
