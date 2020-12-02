@@ -11,6 +11,12 @@ interface ToDoListProps {
 }
 
 export const ToDoList: React.FunctionComponent<ToDoListProps> = ({todos, onRemove, onToggle}) => {
+    if (todos.length === 0) {
+        return (
+            <p className='center'>ToDo is empty</p>
+        )
+    }
+
     return <ul> {todos.map(todo => <ToDo
         key={todo.id}
         title={todo.title}

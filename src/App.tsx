@@ -47,7 +47,11 @@ const App: React.FunctionComponent = () => {
     }
 
     const removeToDoHandler = (id: number): void => {
-        setTodos(prevState => prevState.filter(todo => todo.id !== id))
+        // eslint-disable-next-line no-restricted-globals
+        const isDelete = confirm('Вы действительно хотите удалить эту запись?')
+        if (isDelete) {
+            setTodos(prevState => prevState.filter(todo => todo.id !== id))
+        }
     }
 
     return (
