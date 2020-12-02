@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Navbar} from "./components/Navbar";
 import {ToDoForm} from "./components/ToDoForm";
 import {ToDoList} from "./components/ToDoList";
@@ -7,14 +7,47 @@ import {IToDo} from "./interfaces";
 const App: React.FunctionComponent = () => {
     const [todos, setTodos] = useState<Array<IToDo>>([])
 
+    useEffect(() => console.log('render APP.TSX'))
+
     const addTodoHandler = (title: string): void => {
         let newToDo: IToDo = {
             title,
             id: Date.now(),
-            isDone: false
+            complited: false
         }
         setTodos(prevState => [newToDo, ...prevState])
-        console.log('Add new todo', title)
+    }
+
+    // test
+    // const toggleToDoHandler = (id: number): void => {
+    //     setTodos(prevState => prevState.map(todo => {
+    //         if (todo.id === id) {
+    //             todo.complited = !todo.complited
+    //         }
+    //         return todo
+    //     }))
+    // }
+    // test2
+    // const toggleToDoHandler = (id: number): void => {
+    //     setTodos(prevState => prevState)
+    // }
+
+
+    const toggleToDoHandler = (id: number): void => {
+        setTodos(prevState => prevState.map(todo => {
+                if (todo.id === id) {
+                    return {
+                        ...todo,
+                        complited: !todo.complited
+                    }
+                }
+                return todo
+            }
+        ))
+    }
+
+    const removeToDoHandler = (id: number): void => {
+        setTodos(prevState => prevState.filter(todo => todo.id !== id))
     }
 
     return (
@@ -22,7 +55,7 @@ const App: React.FunctionComponent = () => {
             <Navbar/>
             <div className='container'>
                 <ToDoForm onAdd={addTodoHandler}/>
-                <ToDoList todos={todos}/>
+                <ToDoList todos={todos} onToggle={toggleToDoHandler} onRemove={removeToDoHandler}/>
             </div>
         </>
     )

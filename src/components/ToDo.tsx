@@ -1,18 +1,23 @@
 import React from "react";
 import {IToDo} from "../interfaces";
 
-export const ToDo: React.FunctionComponent<IToDo> = ({title, id, isDone}) => {
+interface ToDoAction extends IToDo {
+    onToggle(id: number): void,
+    onRemove(id: number): void,
+}
+
+export const ToDo: React.FunctionComponent<ToDoAction> = ({title, id, complited, ...props}) => {
     const classes: Array<string> = ['todo']
-    if (isDone) {
+    if (complited) {
         classes.push('comleted')
     }
 
     return (
-        <li className={classes.join(' ')} key={id}>
+        <li className={classes.join(' ')}>
             <label>
-                <input type="checkbox" checked={isDone}/>
+                <input type="checkbox" checked={complited} onChange={() => props.onToggle(id)}/>
                 <span>{title}</span>
-                <i className='material-icons red-text'>delete</i>
+                <i className='material-icons red-text' onClick={props.onRemove.bind(null, id)}>delete</i>
             </label>
         </li>
     )
