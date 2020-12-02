@@ -9,6 +9,15 @@ const App: React.FunctionComponent = () => {
 
     useEffect(() => console.log('render APP.TSX'))
 
+    useEffect(() => {
+        const data = JSON.parse(localStorage.getItem('todos') || '[]') as Array<IToDo>
+        setTodos(data)
+    }, [])
+
+    useEffect(() => {
+        localStorage.setItem('todos', JSON.stringify(todos))
+    }, [todos])
+
     const addTodoHandler = (title: string): void => {
         let newToDo: IToDo = {
             title,

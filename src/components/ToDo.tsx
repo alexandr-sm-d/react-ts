@@ -13,6 +13,8 @@ export const ToDo: React.FunctionComponent<ToDoAction> = ({title, id, complited,
         classes.push('comleted')
     }
 
+    const handler = (event: React.MouseEvent) => onRemove(event, id)
+
     const onRemove = (event: React.MouseEvent, id: number) => {
         event.preventDefault()
         props.onRemove(id)
@@ -23,7 +25,7 @@ export const ToDo: React.FunctionComponent<ToDoAction> = ({title, id, complited,
             <label>
                 <input type="checkbox" checked={complited} onChange={() => props.onToggle(id)}/>
                 <span>{title}</span>
-                <i className='material-icons red-text' onClick={event => onRemove(event, id)}>delete</i>
+                <i className='material-icons red-text' onClick={handler}>delete</i>
             </label>
         </li>
     )
